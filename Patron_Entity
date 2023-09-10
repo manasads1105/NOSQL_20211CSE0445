@@ -1,0 +1,145 @@
+test> show dbs
+admin    40.00 KiB
+config  108.00 KiB
+dbs2      8.00 KiB
+local    72.00 KiB
+manu     80.00 KiB
+test> use dbs2
+switched to db dbs2
+dbs2> db.createCollection("Patron")
+{ ok: 1 }
+dbs2> db.Patron.insertOne({"PatronID":101,"Name":"John Doe","Email":"john.doe@email.com","Phone":"+1(123)456-7890","MembershipDate":"2022-07-03"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("64fd8b598f7af8be6cd77e80")
+}
+dbs2> db.Patron.insertMany([{"PatronID":202,"Name":"Sarah Smith","Email":"sarah.smith@email.com","Phone":"+44 20 7123 4567","MembershipDate":"2023-01-15"},{"PatronID":101,"Name":"Michael Johson","Email":"michael.johnson@email.com","Phone":"+81 3-4567-8901","MembershipDate":"2021-11-20"},{"PatronID":103,"Name":"Sarah Smith","Email":"Sarah.smith@email.com","Phone":"+44 20 7123 4568","MembershipDate":"2023-01-15"},{"PatronID":104,"Name":"Hanuma","Email":"hanuma112@email.com","Phone":"+1(123)453-7560","MembershipDate":"2021-11-25"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("64fd8e568f7af8be6cd77e81"),
+    '1': ObjectId("64fd8e568f7af8be6cd77e82"),
+    '2': ObjectId("64fd8e568f7af8be6cd77e83"),
+    '3': ObjectId("64fd8e568f7af8be6cd77e84")
+  }
+}
+dbs2> db.Patron.find().pretty()
+[
+  {
+    _id: ObjectId("64fd8b598f7af8be6cd77e80"),
+    PatronID: 101,
+    Name: 'John Doe',
+    Email: 'john.doe@email.com',
+    Phone: '+1(123)456-7890',
+    MembershipDate: '2022-07-03'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e81"),
+    PatronID: 202,
+    Name: 'Sarah Smith',
+    Email: 'sarah.smith@email.com',
+    Phone: '+44 20 7123 4567',
+    MembershipDate: '2023-01-15'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e82"),
+    PatronID: 101,
+    Name: 'Michael Johson',
+    Email: 'michael.johnson@email.com',
+    Phone: '+81 3-4567-8901',
+    MembershipDate: '2021-11-20'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e83"),
+    PatronID: 103,
+    Name: 'Sarah Smith',
+    Email: 'Sarah.smith@email.com',
+    Phone: '+44 20 7123 4568',
+    MembershipDate: '2023-01-15'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e84"),
+    PatronID: 104,
+    Name: 'Hanuma',
+    Email: 'hanuma112@email.com',
+    Phone: '+1(123)453-7560',
+    MembershipDate: '2021-11-25'
+  }
+]
+dbs2> db.Patron.find({PartonID:101})
+
+dbs2> db.Patron.find({PatronID:101})
+[
+  {
+    _id: ObjectId("64fd8b598f7af8be6cd77e80"),
+    PatronID: 101,
+    Name: 'John Doe',
+    Email: 'john.doe@email.com',
+    Phone: '+1(123)456-7890',
+    MembershipDate: '2022-07-03'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e82"),
+    PatronID: 101,
+    Name: 'Michael Johson',
+    Email: 'michael.johnson@email.com',
+    Phone: '+81 3-4567-8901',
+    MembershipDate: '2021-11-20'
+  }
+]
+dbs2> db.Patron.find({"Name":"Sarah Smith"})
+[
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e81"),
+    PatronID: 202,
+    Name: 'Sarah Smith',
+    Email: 'sarah.smith@email.com',
+    Phone: '+44 20 7123 4567',
+    MembershipDate: '2023-01-15'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e83"),
+    PatronID: 103,
+    Name: 'Sarah Smith',
+    Email: 'Sarah.smith@email.com',
+    Phone: '+44 20 7123 4568',
+    MembershipDate: '2023-01-15'
+  }
+]
+dbs2> db.Patron.find({"MembershipDate":"2023-01-15"})
+[
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e81"),
+    PatronID: 202,
+    Name: 'Sarah Smith',
+    Email: 'sarah.smith@email.com',
+    Phone: '+44 20 7123 4567',
+    MembershipDate: '2023-01-15'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e83"),
+    PatronID: 103,
+    Name: 'Sarah Smith',
+    Email: 'Sarah.smith@email.com',
+    Phone: '+44 20 7123 4568',
+    MembershipDate: '2023-01-15'
+  }
+]
+dbs2> db.Patron.find({$and:[{"PatronID":{$gt:100}},{"MembershipDate":"2023-01-15"}]})
+[
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e81"),
+    PatronID: 202,
+    Name: 'Sarah Smith',
+    Email: 'sarah.smith@email.com',
+    Phone: '+44 20 7123 4567',
+    MembershipDate: '2023-01-15'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e83"),
+    PatronID: 103,
+    Name: 'Sarah Smith',
+    Email: 'Sarah.smith@email.com',
+    Phone: '+44 20 7123 4568',
+    MembershipDate: '2023-01-15'
+  }
