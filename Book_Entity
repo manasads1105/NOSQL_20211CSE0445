@@ -1,0 +1,237 @@
+test> show dbs
+admin    40.00 KiB
+config  108.00 KiB
+local    72.00 KiB
+manu      8.00 KiB
+test> use manu
+switched to db manu
+manu> db.createCollection("Books")
+{ ok: 1 }
+manu> db.Books.insertOne({"BookID":1234,"BookTitle":"To Kill a Mackingbird","BookAuthor":"Harper Lee","BookGenre":"Fiction","PublishedDate":"July 11,1960","BookISBN":978-0-06-112008-4,"AvailableCopies":50})
+{
+  acknowledged: true,
+  insertedId: ObjectId("64fd69c333620d7ea8fb6912")
+}
+manu> db.Books.insertMany([{"BookID":5678,"BookTitle":"The Great Gatsby","BookAuthor":"F Scott Fitzgerald","BookGenre":"Classic Literature","PublishedDate":"April 10,1925","BookISBN":978-0-7432-7356-5,"AvailableCopies":25},{"BookID":4279,"BookTitle":"The Catcher in the Rye","BookAuthor":"J D Salinger","BookGenre":"Fiction","PublishedDate":"July 16,1951","BookISBN":978-0-316-76948-0,"AvailableCopies":20}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("64fd6c2e33620d7ea8fb6913"),
+    '1': ObjectId("64fd6c2e33620d7ea8fb6914")
+  }
+}
+manu> db.Books.find()
+[
+  {
+    _id: ObjectId("64fd69c333620d7ea8fb6912"),
+    BookID: 1234,
+    BookTitle: 'To Kill a Mackingbird',
+    BookAuthor: 'Harper Lee',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 11,1960',
+    BookISBN: -111040,
+    AvailableCopies: 50
+  },
+  {
+    _id: ObjectId("64fd6c2e33620d7ea8fb6913"),
+    BookID: 5678,
+    BookTitle: 'The Great Gatsby',
+    BookAuthor: 'F Scott Fitzgerald',
+    BookGenre: 'Classic Literature',
+    PublishedDate: 'April 10,1925',
+    BookISBN: -13815,
+    AvailableCopies: 25
+  },
+  {
+    _id: ObjectId("64fd6c2e33620d7ea8fb6914"),
+    BookID: 4279,
+    BookTitle: 'The Catcher in the Rye',
+    BookAuthor: 'J D Salinger',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 16,1951',
+    BookISBN: -76286,
+    AvailableCopies: 20
+  }
+]
+manu> db.Books.insertMany([{"BookID":1234,"BookTitle":"Harry Potter and the Sorceres Stone","BookAuthor":"J K Rowling","BookGenre":"Fantasy","PublishedDate":"June 26,1997","BookISBN":978-0-7475-3269-6,"AvailableCopies":12},{"BookID":9876,"BookTitle":"The Hobbit","BookAuthor":"J.R.R Tolkien","BookGenre":"Fantasy","PublishedDate":"September 21,1937","BookISBN":978-0-261-10219-0,"AvailableCopies":20}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("64fd70aa33620d7ea8fb6915"),
+    '1': ObjectId("64fd70aa33620d7ea8fb6916")
+  }
+}
+manu> db.Books.find().pretty()
+[
+  {
+    _id: ObjectId("64fd69c333620d7ea8fb6912"),
+    BookID: 1234,
+    BookTitle: 'To Kill a Mackingbird',
+    BookAuthor: 'Harper Lee',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 11,1960',
+    BookISBN: -111040,
+    AvailableCopies: 50
+  },
+  {
+    _id: ObjectId("64fd6c2e33620d7ea8fb6913"),
+    BookID: 5678,
+    BookTitle: 'The Great Gatsby',
+    BookAuthor: 'F Scott Fitzgerald',
+    BookGenre: 'Classic Literature',
+    PublishedDate: 'April 10,1925',
+    BookISBN: -13815,
+    AvailableCopies: 25
+  },
+  {
+    _id: ObjectId("64fd6c2e33620d7ea8fb6914"),
+    BookID: 4279,
+    BookTitle: 'The Catcher in the Rye',
+    BookAuthor: 'J D Salinger',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 16,1951',
+    BookISBN: -76286,
+    AvailableCopies: 20
+  },
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6915"),
+    BookID: 1234,
+    BookTitle: 'Harry Potter and the Sorceres Stone',
+    BookAuthor: 'J K Rowling',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'June 26,1997',
+    BookISBN: -9772,
+    AvailableCopies: 12
+  },
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6916"),
+    BookID: 9876,
+    BookTitle: 'The Hobbit',
+    BookAuthor: 'J.R.R Tolkien',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'September 21,1937',
+    BookISBN: -9502,
+    AvailableCopies: 20
+  }
+]
+manu> db.Books.find({BookID:1234})
+[
+  {
+    _id: ObjectId("64fd69c333620d7ea8fb6912"),
+    BookID: 1234,
+    BookTitle: 'To Kill a Mackingbird',
+    BookAuthor: 'Harper Lee',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 11,1960',
+    BookISBN: -111040,
+    AvailableCopies: 50
+  },
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6915"),
+    BookID: 1234,
+    BookTitle: 'Harry Potter and the Sorceres Stone',
+    BookAuthor: 'J K Rowling',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'June 26,1997',
+    BookISBN: -9772,
+    AvailableCopies: 12
+  }
+]
+manu> db.Books.find({BookGenre:"Fantasy"})
+[
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6915"),
+    BookID: 1234,
+    BookTitle: 'Harry Potter and the Sorceres Stone',
+    BookAuthor: 'J K Rowling',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'June 26,1997',
+    BookISBN: -9772,
+    AvailableCopies: 12
+  },
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6916"),
+    BookID: 9876,
+    BookTitle: 'The Hobbit',
+    BookAuthor: 'J.R.R Tolkien',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'September 21,1937',
+    BookISBN: -9502,
+    AvailableCopies: 20
+  }
+]
+manu> db.Books.find({$and:[{"AvailableCopies":{$gt:10}},{"BookID":1234}]})
+[
+  {
+    _id: ObjectId("64fd69c333620d7ea8fb6912"),
+    BookID: 1234,
+    BookTitle: 'To Kill a Mackingbird',
+    BookAuthor: 'Harper Lee',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 11,1960',
+    BookISBN: -111040,
+    AvailableCopies: 50
+  },
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6915"),
+    BookID: 1234,
+    BookTitle: 'Harry Potter and the Sorceres Stone',
+    BookAuthor: 'J K Rowling',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'June 26,1997',
+    BookISBN: -9772,
+    AvailableCopies: 12
+  }
+]
+manu> db.Books.find({$or:[{"AvailableCopies":{$gt:10}},{"BookID":1234}]})
+[
+  {
+    _id: ObjectId("64fd69c333620d7ea8fb6912"),
+    BookID: 1234,
+    BookTitle: 'To Kill a Mackingbird',
+    BookAuthor: 'Harper Lee',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 11,1960',
+    BookISBN: -111040,
+    AvailableCopies: 50
+  },
+  {
+    _id: ObjectId("64fd6c2e33620d7ea8fb6913"),
+    BookID: 5678,
+    BookTitle: 'The Great Gatsby',
+    BookAuthor: 'F Scott Fitzgerald',
+    BookGenre: 'Classic Literature',
+    PublishedDate: 'April 10,1925',
+    BookISBN: -13815,
+    AvailableCopies: 25
+  },
+  {
+    _id: ObjectId("64fd6c2e33620d7ea8fb6914"),
+    BookID: 4279,
+    BookTitle: 'The Catcher in the Rye',
+    BookAuthor: 'J D Salinger',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 16,1951',
+    BookISBN: -76286,
+    AvailableCopies: 20
+  },
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6915"),
+    BookID: 1234,
+    BookTitle: 'Harry Potter and the Sorceres Stone',
+    BookAuthor: 'J K Rowling',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'June 26,1997',
+    BookISBN: -9772,
+    AvailableCopies: 12
+  },
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6916"),
+    BookID: 9876,
+    BookTitle: 'The Hobbit',
+    BookAuthor: 'J.R.R Tolkien',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'September 21,1937',
+    BookISBN: -9502,
+    AvailableCopies: 20
+  }
