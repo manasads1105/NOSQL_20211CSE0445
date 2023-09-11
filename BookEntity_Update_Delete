@@ -1,0 +1,164 @@
+test> use manu
+switched to db manu
+manu> db.Books.find()
+[
+  {
+    _id: ObjectId("64fd69c333620d7ea8fb6912"),
+    BookID: 1234,
+    BookTitle: 'To Kill a Mackingbird',
+    BookAuthor: 'Harper Lee',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 11,1960',
+    BookISBN: -111040,
+    AvailableCopies: 60
+  },
+  {
+    _id: ObjectId("64fd6c2e33620d7ea8fb6913"),
+    BookID: 5678,
+    BookTitle: 'The Great Gatsby',
+    BookAuthor: 'F Scott Fitzgerald',
+    BookGenre: 'Classic Literature',
+    PublishedDate: 'April 10,1925',
+    BookISBN: -13815,
+    AvailableCopies: 25
+  },
+  {
+    _id: ObjectId("64fd6c2e33620d7ea8fb6914"),
+    BookID: 4279,
+    BookTitle: 'The Catcher in the Rye',
+    BookAuthor: 'J D Salinger',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 16,1951',
+    BookISBN: -76286,
+    AvailableCopies: 20
+  },
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6915"),
+    BookID: 1234,
+    BookTitle: 'Harry Potter and the Sorceres Stone',
+    BookAuthor: 'J K Rowling',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'June 26,1997',
+    BookISBN: -9772,
+    AvailableCopies: 22
+  },
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6916"),
+    BookID: 9876,
+    BookTitle: 'The Hobbit',
+    BookAuthor: 'J.R.R Tolkien',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'September 21,1937',
+    BookISBN: -9502,
+    AvailableCopies: 30
+  }
+]
+manu> db.Books.updateOne({"BookID":9876},{$set:{"AvailableCopies":30}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+manu> db.Books.find({"BookID":9876})
+[
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6916"),
+    BookID: 9876,
+    BookTitle: 'The Hobbit',
+    BookAuthor: 'J.R.R Tolkien',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'September 21,1937',
+    BookISBN: -9502,
+    AvailableCopies: 30
+  }
+]
+manu> db.Books.updateMany({"BookID":1234},{$inc:{"AvailableCopies":10}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+manu> db.Books.find({"BookID":1234})
+[
+  {
+    _id: ObjectId("64fd69c333620d7ea8fb6912"),
+    BookID: 1234,
+    BookTitle: 'To Kill a Mackingbird',
+    BookAuthor: 'Harper Lee',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 11,1960',
+    BookISBN: -111040,
+    AvailableCopies: 70
+  },
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6915"),
+    BookID: 1234,
+    BookTitle: 'Harry Potter and the Sorceres Stone',
+    BookAuthor: 'J K Rowling',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'June 26,1997',
+    BookISBN: -9772,
+    AvailableCopies: 32
+  }
+]
+manu> db.Books.replaceOne({"BookID":5678},{"BookID":5678,"BookTitle":"Publish news letter","AvailableCopies": 40})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+manu> db.Books.find({"BookID":5678})
+[
+  {
+    _id: ObjectId("64fd6c2e33620d7ea8fb6913"),
+    BookID: 5678,
+    BookTitle: 'Publish news letter',
+    AvailableCopies: 40
+  }
+]
+manu> db.Books.deleteOne({"BookID":9876})
+{ acknowledged: true, deletedCount: 1 }
+manu> db.Books.find()
+[
+  {
+    _id: ObjectId("64fd69c333620d7ea8fb6912"),
+    BookID: 1234,
+    BookTitle: 'To Kill a Mackingbird',
+    BookAuthor: 'Harper Lee',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 11,1960',
+    BookISBN: -111040,
+    AvailableCopies: 70
+  },
+  {
+    _id: ObjectId("64fd6c2e33620d7ea8fb6913"),
+    BookID: 5678,
+    BookTitle: 'Publish news letter',
+    AvailableCopies: 40
+  },
+  {
+    _id: ObjectId("64fd6c2e33620d7ea8fb6914"),
+    BookID: 4279,
+    BookTitle: 'The Catcher in the Rye',
+    BookAuthor: 'J D Salinger',
+    BookGenre: 'Fiction',
+    PublishedDate: 'July 16,1951',
+    BookISBN: -76286,
+    AvailableCopies: 20
+  },
+  {
+    _id: ObjectId("64fd70aa33620d7ea8fb6915"),
+    BookID: 1234,
+    BookTitle: 'Harry Potter and the Sorceres Stone',
+    BookAuthor: 'J K Rowling',
+    BookGenre: 'Fantasy',
+    PublishedDate: 'June 26,1997',
+    BookISBN: -9772,
+    AvailableCopies: 32
+  }
