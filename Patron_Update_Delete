@@ -1,0 +1,132 @@
+test> use dbs2
+switched to db dbs2
+dbs2> db.Patron.find().pretty()
+[
+  {
+    _id: ObjectId("64fd8b598f7af8be6cd77e80"),
+    PatronID: 101,
+    Name: 'John Doe',
+    Email: 'john.doe@email.com',
+    Phone: '+1(123)456-7890',
+    MembershipDate: '2022-07-03'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e81"),
+    PatronID: 202,
+    Name: 'James Franco',
+    Email: 'sarah.smith@email.com',
+    Phone: '+44 20 7123 4567',
+    MembershipDate: '2023-01-15'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e82"),
+    PatronID: 101,
+    Name: 'Michael Johson',
+    Email: 'michael.johnson@email.com',
+    Phone: '+81 3-4567-8901',
+    MembershipDate: '2021-11-20'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e83"),
+    PatronID: 203,
+    Name: 'Sarah Smith',
+    Email: 'Sarah.smith@email.com',
+    Phone: '+44 20 7123 4568',
+    MembershipDate: '2023-01-15'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e84"),
+    PatronID: 104,
+    Name: 'Hanuma',
+    Email: 'hanuma112@email.com',
+    Phone: '+1(123)453-7560',
+    MembershipDate: '2021-11-25'
+  }
+]
+dbs2> db.Patron.updateOne({"PatronID":202},{$set:{"Name":"James Franco"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+dbs2> db.Patron.find({"PatronID":202})
+[
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e81"),
+    PatronID: 202,
+    Name: 'James Franco',
+    Email: 'sarah.smith@email.com',
+    Phone: '+44 20 7123 4567',
+    MembershipDate: '2023-01-15'
+  }
+]
+dbs2> db.Patron.updateMany({"Name":"Sarah Smith"},{$inc:{"PatronID": 100}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+dbs2> db.Patron.find({"Name":"Sarah Smith"})
+[
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e83"),
+    PatronID: 303,
+    Name: 'Sarah Smith',
+    Email: 'Sarah.smith@email.com',
+    Phone: '+44 20 7123 4568',
+    MembershipDate: '2023-01-15'
+  }
+]
+dbs2> db.Patron.replaceOne({"PatronID":104},{"PatronID":104,"Name":"Latha"})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+dbs2> db.Patron.find({"PatronID":104})
+[
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e84"),
+    PatronID: 104,
+    Name: 'Latha'
+  }
+]
+dbs2> db.Patron.deleteOne({"PatronID":202})
+{ acknowledged: true, deletedCount: 1 }
+dbs2> db.Patron.find().pretty()
+[
+  {
+    _id: ObjectId("64fd8b598f7af8be6cd77e80"),
+    PatronID: 101,
+    Name: 'John Doe',
+    Email: 'john.doe@email.com',
+    Phone: '+1(123)456-7890',
+    MembershipDate: '2022-07-03'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e82"),
+    PatronID: 101,
+    Name: 'Michael Johson',
+    Email: 'michael.johnson@email.com',
+    Phone: '+81 3-4567-8901',
+    MembershipDate: '2021-11-20'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e83"),
+    PatronID: 303,
+    Name: 'Sarah Smith',
+    Email: 'Sarah.smith@email.com',
+    Phone: '+44 20 7123 4568',
+    MembershipDate: '2023-01-15'
+  },
+  {
+    _id: ObjectId("64fd8e568f7af8be6cd77e84"),
+    PatronID: 104,
+    Name: 'Latha'
+  }
